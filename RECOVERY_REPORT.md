@@ -1,11 +1,14 @@
 # Recovery Report
 
-本次恢复基于以下事实推断原始项目结构：
+这份报告记录的是此前项目文件缺失后，如何根据现有内容推断并恢复原始网页工程。
 
-- 当前根目录只剩 `android-app/`
-- `android-app/app/src/main/assets/www/` 中保留了完整网页资源
-- `android-app/README.md` 说明该 Android 工程只是网页游戏的外壳，网页资源原本独立存在
-- 之前对话明确提到项目最初包含根目录网页/PWA 文件，以及后续新增的 `android-app/` Android 工程
+## 恢复时的已知事实
+
+- 根目录中大量网页项目文件已经缺失。
+- `android-app/` 目录仍然存在。
+- `android-app/app/src/main/assets/www/` 中保留了完整网页资源。
+- `android-app/README.md` 能证明 Android 工程只是网页游戏的封装壳层，而不是唯一源头。
+- 之前的对话中明确提到过根目录原本存在独立网页 / PWA 文件，以及后来新增的 Android 工程。
 
 ## 推断出的原始结构
 
@@ -24,7 +27,7 @@ D:\coding\codex\
     ...
 ```
 
-## 本次确认缺失并已补回的文件
+## 当时确认缺失并补齐的文件
 
 - `D:\coding\codex\index.html`
 - `D:\coding\codex\styles.css`
@@ -35,18 +38,16 @@ D:\coding\codex\
 - `D:\coding\codex\icons\icon-192.png`
 - `D:\coding\codex\icons\icon-512.png`
 
-## 恢复方式
+## 恢复方法
 
-- 网页资源文件和图标：从 `android-app/app/src/main/assets/www/` 只读复制回根目录
-- 根目录 `README.md`：根据现存工程结构与之前对话手工重建
+- 网页资源与图标：从 `android-app/app/src/main/assets/www/` 读取并复制回根目录
+- `README.md`：根据现有工程结构与对话信息手工重建
 
-## 明确未改动的目录
+## 恢复过程中的边界
 
-按照要求，本次没有对以下目录做内容修改：
+按照当时的要求，恢复过程中没有修改 `android-app/app` 目录中的原有文件内容。
 
-- `D:\coding\codex\android-app\app`
+说明如下：
 
-说明：
-
-- 读取了 `android-app/app` 中的现存文件用于反推和恢复
-- 但没有编辑、删除、覆盖其中任何文件
+- 允许读取 `android-app/app` 用于反推与恢复
+- 不对其中原始文件做删除、覆盖或重写

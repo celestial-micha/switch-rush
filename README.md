@@ -1,25 +1,35 @@
-# Switch Rush
+﻿# Switch Rush
 
-`Switch Rush` 是一个极简的三轨闪避小游戏。
+`Switch Rush` 是一个极简的三轨闪避小游戏，主打移动端单指操作、节奏反馈和可安装体验。
 
-项目包含两部分：
+## 版权说明
 
-- 根目录网页版本：可直接本地运行，也可部署为静态站点/PWA
+本仓库代码仅用于作品展示与学习参考。
+
+未经作者许可，不得分发、商用或用于二次发布。
+
+## 项目结构
+
+- 根目录网页版本：可直接本地运行，也可部署为静态站点 / PWA
 - `android-app/`：Android WebView 壳工程，用来打包成可安装的安卓应用
 
-## 根目录结构
+## 功能亮点
 
-- `index.html`：页面结构
-- `styles.css`：界面样式
-- `app.js`：游戏逻辑、音效、动画、输入处理
-- `manifest.webmanifest`：PWA 清单
-- `sw.js`：离线缓存
-- `icons/`：网页与安装图标
-- `android-app/`：Android Studio 工程
+- 三轨闪避玩法，单指即可完成操作
+- `FLOW / FEVER` 节奏反馈系统
+- 内置轻量合成器背景音乐与音效
+- 支持暂停、最佳分数记录、赞赏页入口
+- 支持 PWA 安装
+- 支持 Android WebView 封装
 
-## 本地运行网页版本
+## 文档说明
 
-建议使用本地静态服务器启动：
+- `README.md`：项目介绍与运行方式
+- `CHANGELOG.md`：从初始版本到当前版本的迭代记录
+- `GIT_GUIDE.md`：本项目的 Git 提交与版本保存说明
+- `RECOVERY_REPORT.md`：之前丢失文件后的恢复记录
+
+## 本地运行
 
 ```powershell
 cd D:\coding\codex
@@ -41,3 +51,14 @@ http://localhost:4173
 更详细说明见：
 
 `D:\coding\codex\android-app\README.md`
+
+## 面试展示建议
+
+如果你把这个项目放到 GitHub 给面试官看，建议重点介绍：
+
+- 为什么选择极简玩法
+- 如何为移动端做单指操作设计
+- 如何用原生 HTML/CSS/JS 实现完整游戏循环
+- 如何同时支持网页安装与 Android 壳打包
+- 你如何根据试玩反馈持续迭代 UI、节奏和交互
+- 你如何通过版本记录与问题拆解，逐步修复移动端长屏适配、系统栏遮挡、返回键状态冲突等问题

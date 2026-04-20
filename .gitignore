@@ -1,6 +1,7 @@
 # OS / editor
 .DS_Store
 Thumbs.db
+.idea/
 
 # Python local caches
 __pycache__/
@@ -15,3 +16,7 @@ android-app/local.properties
 
 # Logs
 *.log
+
+# Private payment QR codes
+Reward Code.private.png
+android-app/app/src/main/assets/www/Reward Code.private.png

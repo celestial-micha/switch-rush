@@ -1,7 +1,9 @@
 package com.switchrush.app
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -14,7 +16,15 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    window.statusBarColor = Color.parseColor("#0F172A")
+    window.navigationBarColor = Color.parseColor("#0F172A")
+
     webView = WebView(this)
+    webView.layoutParams = ViewGroup.LayoutParams(
+      ViewGroup.LayoutParams.MATCH_PARENT,
+      ViewGroup.LayoutParams.MATCH_PARENT
+    )
+    webView.setBackgroundColor(Color.parseColor("#0F172A"))
     setContentView(webView)
 
     webView.settings.apply {

@@ -13,44 +13,48 @@
 </head>
 <body>
   <main class="app-shell">
-    <section class="hud">
-      <div class="brand">
-        <span class="brand-mark"></span>
-        <div>
-          <p class="eyebrow">极简反应游戏</p>
-          <h1>Switch Rush</h1>
-        </div>
-      </div>
-
-      <div class="scoreboard">
-        <div class="score-card">
-          <span class="label">分数</span>
-          <strong id="score">0</strong>
-        </div>
-        <div class="score-card">
-          <span class="label">最佳</span>
-          <strong id="best">0</strong>
-        </div>
-      </div>
-    </section>
-
-    <section class="flow-panel" aria-label="Flow 能量">
-      <div class="flow-copy">
-        <span class="label">节奏槽</span>
-        <strong id="flowState">FLOW</strong>
-      </div>
-      <div class="flow-bar">
-        <div class="flow-fill" id="flowFill"></div>
-      </div>
-    </section>
-
     <section class="stage-wrap">
       <canvas id="game" width="720" height="1280" aria-label="Switch Rush 游戏画面"></canvas>
 
+      <button class="pause-fab icon-play" id="pauseButton" type="button" aria-label="暂停或继续游戏"></button>
+
+      <div class="in-game-hud" aria-label="游戏信息">
+        <div class="hud-row">
+          <div class="hud-strip">
+            <div class="hud-flow">
+              <div class="flow-copy">
+                <span class="label">节奏槽</span>
+                <strong id="flowState" class="flow-state-hidden" aria-hidden="true"></strong>
+              </div>
+              <div class="flow-bar">
+                <div class="flow-fill" id="flowFill"></div>
+              </div>
+            </div>
+
+            <div class="hud-scores">
+              <div class="score-pill">
+                <span class="label">分数</span>
+                <strong id="score">0</strong>
+              </div>
+              <div class="score-pill">
+                <span class="label">最佳</span>
+                <strong id="best">0</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="overlay overlay-visible" id="startOverlay">
         <div class="panel">
-          <h2>Switch Rush</h2>
-          <p class="panel-copy">点左半边向左，点右半边向右。躲开障碍，保持节奏，尽量把分数刷高。</p>
+          <div class="panel-brand">
+            <span class="brand-mark"></span>
+            <div>
+              <p class="eyebrow">极简反应游戏</p>
+              <h2>Switch Rush</h2>
+            </div>
+          </div>
+          <p class="panel-copy">点左半边向左，点右半边向右。中间三角是暂停。躲开障碍，保持节奏，尽量把分数刷高。</p>
           <button id="startButton" class="cta">开始冲刺</button>
           <p class="hint">第一次触摸后会自动开始背景音乐。</p>
         </div>
@@ -58,16 +62,60 @@
 
       <div class="overlay" id="gameOverOverlay">
         <div class="panel">
-          <p class="panel-kicker">这次成绩</p>
-          <h2><span id="finalScore">0</span> 分</h2>
+          <div class="panel-brand compact">
+            <span class="brand-mark"></span>
+            <div>
+              <p class="eyebrow">Switch Rush</p>
+              <h2>这次成绩</h2>
+            </div>
+          </div>
+          <h3 class="result-score"><span id="finalScore">0</span> 分</h3>
           <p class="panel-copy" id="gameOverMessage">再来一次，找回节奏。</p>
           <button id="restartButton" class="cta">再来一局</button>
+        </div>
+      </div>
+
+      <div class="overlay" id="pauseOverlay">
+        <div class="panel">
+          <div class="panel-brand compact">
+            <span class="brand-mark"></span>
+            <div>
+              <p class="eyebrow">Pause</p>
+              <h2>已暂停</h2>
+            </div>
+          </div>
+          <p class="panel-copy">休息一下也没关系，准备好后继续冲刺。</p>
+          <button id="resumeButton" class="cta">继续游戏</button>
+        </div>
+      </div>
+
+      <button class="support-fab" id="supportFab" type="button">赞赏作者</button>
+
+      <div class="overlay" id="supportOverlay">
+        <div class="panel support-panel">
+          <button class="back-chip" id="supportBack" type="button">返回游戏</button>
+          <div class="panel-brand compact">
+            <span class="brand-mark"></span>
+            <div>
+              <p class="eyebrow">Support</p>
+              <h2>谢谢你喜欢 Switch Rush</h2>
+            </div>
+          </div>
+          <p class="panel-copy">谢谢您的喜欢。感谢您对开发这款小游戏的认可，您可以点击下方按钮赞助我。</p>
+          <div class="support-actions">
+            <button type="button" class="tip-chip is-active" data-amount="0.1">¥0.1</button>
+            <button type="button" class="tip-chip" data-amount="0.2">¥0.2</button>
+            <button type="button" class="tip-chip" data-amount="0.5">¥0.5</button>
+          </div>
+          <div class="support-qr" id="supportQr">
+            <img class="support-qr-image" src="Reward Code‌.png" alt="赞赏二维码">
+            <p id="supportText">当前三个按钮暂时共用同一张赞赏码，感谢你的支持。</p>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="footer-bar">
-      <p>点左半边向左，点右半边向右</p>
       <button id="installButton" class="install-button hidden">安装到手机</button>
     </section>
   </main>

@@ -2,6 +2,7 @@
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const stageWrap = document.querySelector(".stage-wrap");
 
 const scoreNode = document.getElementById("score");
 const bestNode = document.getElementById("best");
@@ -9,11 +10,19 @@ const finalScoreNode = document.getElementById("finalScore");
 const gameOverMessageNode = document.getElementById("gameOverMessage");
 const startOverlay = document.getElementById("startOverlay");
 const gameOverOverlay = document.getElementById("gameOverOverlay");
+const pauseOverlay = document.getElementById("pauseOverlay");
 const startButton = document.getElementById("startButton");
 const restartButton = document.getElementById("restartButton");
+const pauseButton = document.getElementById("pauseButton");
+const resumeButton = document.getElementById("resumeButton");
 const installButton = document.getElementById("installButton");
 const flowFillNode = document.getElementById("flowFill");
 const flowStateNode = document.getElementById("flowState");
+const supportTextNode = document.getElementById("supportText");
+const tipChipNodes = Array.from(document.querySelectorAll(".tip-chip"));
+const supportFab = document.getElementById("supportFab");
+const supportOverlay = document.getElementById("supportOverlay");
+const supportBack = document.getElementById("supportBack");
 const LANE_COUNT = 3;
 
 const state = {
@@ -40,6 +49,7 @@ const state = {
   feverTimer: 0,
   feverBursts: 0,
   laneBag: [],
+  modeBeforeSupport: null,
   player: {
     lane: 1,
     x: 0,
@@ -166,7 +176,9 @@ function laneX(lane) {
 function syncFlowUi() {
   const value = Math.max(0, Math.min(100, state.flow));
   flowFillNode.style.width = `${value}%`;
-  flowStateNode.textContent = isFever() ? "FEVER x2" : value >= 75 ? "FLOW HOT" : "FLOW";
+  if (flowStateNode) {
+    flowStateNode.textContent = "";
+  }
 }
 
 function buildStars() {
@@ -183,8 +195,10 @@ function buildStars() {
 
 function resizeCanvas() {
   const ratio = window.devicePixelRatio || 1;
-  const width = 720;
-  const height = 1280;
+  const mobileLayout = window.matchMedia("(max-width: 640px)").matches;
+  const bounds = stageWrap ? stageWrap.getBoundingClientRect() : null;
+  const width = mobileLayout && bounds ? Math.max(320, Math.round(bounds.width)) : 720;
+  const height = mobileLayout && bounds ? Math.max(560, Math.round(bounds.height)) : 1280;
   canvas.width = width * ratio;
   canvas.height = height * ratio;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -238,6 +252,7 @@ function startFever() {
 
 function resetGame() {
   state.mode = "running";
+  state.modeBeforeSupport = null;
   state.score = 0;
   state.combo = 0;
   state.pulse = 0;
@@ -263,6 +278,32 @@ function resetGame() {
   syncFlowUi();
   startOverlay.classList.remove("overlay-visible");
   gameOverOverlay.classList.remove("overlay-visible");
+  pauseOverlay.classList.remove("overlay-visible");
+}
+
+function returnToHome() {
+  state.mode = "idle";
+  state.modeBeforeSupport = null;
+  state.combo = 0;
+  state.flow = 0;
+  state.feverTimer = 0;
+  state.feverBursts = 0;
+  state.pulse = 0;
+  state.flash = 0;
+  state.shake = 0;
+  state.obstacles = [];
+  state.particles = [];
+  state.floaters = [];
+  state.player.trail = [];
+  state.player.lane = 1;
+  state.player.targetX = laneX(1);
+  state.player.x = state.player.targetX;
+  scoreNode.textContent = "0";
+  syncFlowUi();
+  startOverlay.classList.add("overlay-visible");
+  gameOverOverlay.classList.remove("overlay-visible");
+  pauseOverlay.classList.remove("overlay-visible");
+  toggleSupportOverlay(false);
 }
 
 function spawnObstacle() {
@@ -270,8 +311,8 @@ function spawnObstacle() {
     state.laneBag = shuffledLanes();
   }
   const lane = state.laneBag.shift();
-  const height = 80;
-  const width = 84;
+  const width = Math.max(64, Math.min(84, Math.round(state.width * 0.18)));
+  const height = Math.max(62, Math.min(80, Math.round(width * 0.95)));
   const y = -height - 40;
   state.obstacles.push({
     lane,
@@ -344,6 +385,7 @@ function endGame() {
     gameOverMessageNode.textContent = "规则仍然只有一个动作，但高分需要把切线时机压到极限。";
   }
   gameOverOverlay.classList.add("overlay-visible");
+  pauseOverlay.classList.remove("overlay-visible");
 }
 
 function updateRunning(dt) {
@@ -447,6 +489,8 @@ function updateParticles(dt) {
 function update(dt) {
   if (state.mode === "running") {
     updateRunning(dt);
+  } else if (state.mode === "paused") {
+    return;
   } else {
     state.flash = Math.max(0, state.flash - dt * 2.2);
     state.shake = Math.max(0, state.shake - dt * 30);
@@ -605,10 +649,10 @@ function drawCombo() {
   ctx.fillStyle = "rgba(248, 250, 252, 0.92)";
   ctx.font = "800 42px Segoe UI";
   ctx.textAlign = "center";
-  ctx.fillText(`${state.combo} STREAK`, state.width / 2, 100);
+  ctx.fillText(`${state.combo} STREAK`, state.width / 2, 176);
   ctx.fillStyle = "rgba(148, 163, 184, 0.9)";
   ctx.font = "600 22px Segoe UI";
-  ctx.fillText(isFever() ? "score x2 active" : "hold the rhythm", state.width / 2, 132);
+  ctx.fillText(isFever() ? "score x2 active" : "hold the rhythm", state.width / 2, 208);
 }
 
 function drawFlash() {
@@ -652,13 +696,65 @@ function handlePrimaryAction() {
   }
 }
 
+function toggleSupportOverlay(show) {
+  if (show) {
+    state.modeBeforeSupport = state.mode;
+    if (state.mode === "running") {
+      state.mode = "paused";
+    }
+  } else if (state.modeBeforeSupport) {
+    if (state.modeBeforeSupport === "running" && state.mode === "paused") {
+      state.mode = "running";
+    }
+    state.modeBeforeSupport = null;
+  }
+  supportOverlay.classList.toggle("overlay-visible", show);
+}
+
 function handleMove(direction) {
   audio.unlock();
   if (state.mode === "idle" || state.mode === "gameover") {
     resetGame();
     return;
   }
+  if (state.mode === "paused") return;
   movePlayer(direction);
+}
+
+function togglePause() {
+  if (state.mode === "running") {
+    state.mode = "paused";
+    pauseOverlay.classList.add("overlay-visible");
+    return;
+  }
+  if (state.mode === "paused") {
+    state.mode = "running";
+    pauseOverlay.classList.remove("overlay-visible");
+  }
+}
+
+function handleBackAction() {
+  if (supportOverlay.classList.contains("overlay-visible")) {
+    toggleSupportOverlay(false);
+    return true;
+  }
+
+  if (state.mode === "paused") {
+    togglePause();
+    return true;
+  }
+
+  if (state.mode === "gameover") {
+    returnToHome();
+    return true;
+  }
+
+  if (state.mode === "running") {
+    returnToHome();
+    return true;
+  }
+
+  return false;
 }
 
 window.addEventListener("resize", resizeCanvas);
@@ -685,10 +781,26 @@ window.addEventListener("keydown", (event) => {
     event.preventDefault();
     handlePrimaryAction();
   }
+  if (event.code === "Escape") {
+    event.preventDefault();
+    handleBackAction();
+  }
 });
 
 startButton.addEventListener("click", resetGame);
 restartButton.addEventListener("click", resetGame);
+pauseButton.addEventListener("click", togglePause);
+resumeButton.addEventListener("click", togglePause);
+supportFab.addEventListener("click", () => toggleSupportOverlay(true));
+supportBack.addEventListener("click", () => toggleSupportOverlay(false));
+tipChipNodes.forEach((chip) => {
+  chip.addEventListener("click", () => {
+    tipChipNodes.forEach((item) => item.classList.remove("is-active"));
+    chip.classList.add("is-active");
+    const amount = chip.dataset.amount;
+    supportTextNode.textContent = `当前选择 ¥${amount}，暂时共用同一张赞赏码，感谢你的支持。`;
+  });
+});
 
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();
@@ -708,6 +820,12 @@ window.addEventListener("appinstalled", () => {
   installButton.classList.add("hidden");
 });
 
+window.addEventListener("popstate", () => {
+  if (handleBackAction()) {
+    history.pushState({ screen: "game" }, "");
+  }
+});
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("./sw.js").catch(() => {});
@@ -716,4 +834,6 @@ if ("serviceWorker" in navigator) {
 
 resizeCanvas();
 syncFlowUi();
+history.replaceState({ screen: "game" }, "");
+history.pushState({ screen: "game" }, "");
 requestAnimationFrame(loop);
