@@ -1,0 +1,259 @@
+﻿:root {
+  color-scheme: dark;
+  --bg-top: #08111f;
+  --bg-bottom: #111c31;
+  --panel: rgba(9, 17, 31, 0.72);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --accent: #f97316;
+  --cyan: #22d3ee;
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(34, 211, 238, 0.16), transparent 28%),
+    radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.18), transparent 20%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  color: var(--text);
+  touch-action: manipulation;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(100%, 520px);
+  display: grid;
+  gap: 16px;
+}
+
+.hud,
+.footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 16px;
+  height: 48px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--accent), var(--cyan));
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.25);
+}
+
+.eyebrow,
+.label,
+.hint,
+.footer-bar p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hud h1,
+.panel h2 {
+  margin: 0;
+}
+
+.hud h1 {
+  font-size: clamp(28px, 6vw, 42px);
+  line-height: 1;
+}
+
+.scoreboard {
+  display: flex;
+  gap: 10px;
+}
+
+.score-card {
+  min-width: 82px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow);
+}
+
+.score-card strong {
+  display: block;
+  margin-top: 2px;
+  font-size: 28px;
+}
+
+.flow-panel {
+  display: grid;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow);
+}
+
+.flow-copy {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.flow-copy strong {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.flow-bar {
+  position: relative;
+  overflow: hidden;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.flow-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.9), rgba(249, 115, 22, 0.95));
+  box-shadow: 0 0 24px rgba(249, 115, 22, 0.22);
+  transition: width 120ms linear;
+}
+
+.stage-wrap {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)), rgba(7, 12, 22, 0.85);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--shadow);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 10, 18, 0.52);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.overlay-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel {
+  width: min(100%, 360px);
+  padding: 24px;
+  border-radius: 28px;
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+}
+
+.panel-kicker {
+  margin: 0 0 10px;
+  color: var(--cyan);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel-copy {
+  margin: 14px 0 18px;
+  line-height: 1.6;
+  color: #dbe4f3;
+}
+
+.cta,
+.install-button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 20px;
+  color: #fff7ed;
+  background: linear-gradient(135deg, var(--accent), #fb7185);
+  box-shadow: 0 18px 30px rgba(249, 115, 22, 0.28);
+}
+
+.install-button {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+.cta:hover,
+.install-button:hover {
+  transform: translateY(-1px);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  body {
+    padding: 12px;
+  }
+
+  .hud,
+  .footer-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .scoreboard {
+    width: 100%;
+  }
+
+  .score-card {
+    flex: 1;
+  }
+
+  .footer-bar {
+    gap: 8px;
+  }
+
+  .footer-bar p,
+  .install-button {
+    text-align: center;
+  }
+}

@@ -1,0 +1,17 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Python local caches
+__pycache__/
+*.pyc
+
+# Android Studio / Gradle local files
+android-app/.gradle/
+android-app/.idea/
+android-app/build/
+android-app/app/build/
+android-app/local.properties
+
+# Logs
+*.log

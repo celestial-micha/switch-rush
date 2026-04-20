@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Switch Rush 是一个极简但很上头的三轨闪避小游戏。点左半边向左，点右半边向右，打出连过、积攒 FLOW、进入 FEVER。">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Switch Rush</title>
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hud">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div>
+          <p class="eyebrow">极简反应游戏</p>
+          <h1>Switch Rush</h1>
+        </div>
+      </div>
+
+      <div class="scoreboard">
+        <div class="score-card">
+          <span class="label">分数</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="score-card">
+          <span class="label">最佳</span>
+          <strong id="best">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="flow-panel" aria-label="Flow 能量">
+      <div class="flow-copy">
+        <span class="label">节奏槽</span>
+        <strong id="flowState">FLOW</strong>
+      </div>
+      <div class="flow-bar">
+        <div class="flow-fill" id="flowFill"></div>
+      </div>
+    </section>
+
+    <section class="stage-wrap">
+      <canvas id="game" width="720" height="1280" aria-label="Switch Rush 游戏画面"></canvas>
+
+      <div class="overlay overlay-visible" id="startOverlay">
+        <div class="panel">
+          <h2>Switch Rush</h2>
+          <p class="panel-copy">点左半边向左，点右半边向右。躲开障碍，保持节奏，尽量把分数刷高。</p>
+          <button id="startButton" class="cta">开始冲刺</button>
+          <p class="hint">第一次触摸后会自动开始背景音乐。</p>
+        </div>
+      </div>
+
+      <div class="overlay" id="gameOverOverlay">
+        <div class="panel">
+          <p class="panel-kicker">这次成绩</p>
+          <h2><span id="finalScore">0</span> 分</h2>
+          <p class="panel-copy" id="gameOverMessage">再来一次，找回节奏。</p>
+          <button id="restartButton" class="cta">再来一局</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-bar">
+      <p>点左半边向左，点右半边向右</p>
+      <button id="installButton" class="install-button hidden">安装到手机</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
