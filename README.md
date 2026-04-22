@@ -26,7 +26,7 @@
 
 - `README.md`：项目介绍与运行方式
 - `CHANGELOG.md`：从初始版本到当前版本的迭代记录
-- `GIT_GUIDE.md`：本项目的 Git 提交与版本保存说明
+- `RELEASE_CHECKLIST.md`：提交 GitHub 和打正式 APK 前的检查清单
 - `RECOVERY_REPORT.md`：之前丢失文件后的恢复记录
 
 ## 本地运行

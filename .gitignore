@@ -17,6 +17,10 @@ android-app/local.properties
 # Logs
 *.log
 
+# Local notes
+GIT_GUIDE.md
+
 # Private payment QR codes
 Reward Code.private.png
 android-app/app/src/main/assets/www/Reward Code.private.png
+*.private.png
