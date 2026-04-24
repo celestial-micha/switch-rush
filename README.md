@@ -1,53 +1,61 @@
-﻿# Switch Rush
+# Switch Rush
 
-`Switch Rush` 是一个极简的三轨闪避小游戏，主打移动端单指操作、节奏反馈和可安装体验。
+[中文说明](./README_CN.md)
 
-## 版权说明
+`Switch Rush` is a minimalist three-lane dodge game focused on one-thumb mobile controls, rhythm feedback, and installable delivery.
 
-本仓库代码仅用于作品展示与学习参考。
+## Screenshots
 
-未经作者许可，不得分发、商用或用于二次发布。
+### Home Screen
 
-## 项目结构
+![Switch Rush Home](./image/Switch_Rush_Home.jpg)
 
-- 根目录网页版本：可直接本地运行，也可部署为静态站点 / PWA
-- `android-app/`：Android WebView 壳工程，用来打包成可安装的安卓应用
+### Gameplay
 
-## 功能亮点
+![Switch Rush Gameplay](./image/Switch_Rush_Game_Page.jpg)
 
-- 三轨闪避玩法，单指即可完成操作
-- `FLOW / FEVER` 节奏反馈系统
-- 内置轻量合成器背景音乐与音效
-- 支持暂停、最佳分数记录、赞赏页入口
-- 支持 PWA 安装
-- 支持 Android WebView 封装
+## License Notice
 
-## 文档说明
+This repository is provided for portfolio display and learning reference only.
 
-- `README.md`：项目介绍与运行方式
-- `CHANGELOG.md`：从初始版本到当前版本的迭代记录
-- `RELEASE_CHECKLIST.md`：提交 GitHub 和打正式 APK 前的检查清单
-- `RECOVERY_REPORT.md`：之前丢失文件后的恢复记录
+Without the author's permission, redistribution, commercial use, or secondary publication is not allowed.
 
-## 本地运行
+## Project Structure
+
+- Root web version: can be run locally or deployed as a static site / PWA
+- `android-app/`: Android WebView wrapper project for building an installable Android app
+
+## Highlights
+
+- Three-lane dodge gameplay with one-finger controls
+- `FLOW / FEVER` rhythm feedback system
+- Lightweight built-in synthesized background music and sound effects
+- Pause support, best-score saving, and a support page entry
+- PWA install support
+- Android WebView packaging support
+
+## Documents
+
+- `README.md`: English project overview
+- `README_CN.md`: Chinese project overview
+- `CHANGELOG.md`: iteration record from the initial version to the current build
+- `RELEASE_CHECKLIST.md`: checklist before pushing to GitHub or building a formal APK
+
+## Run Locally
 
 ```powershell
 cd D:\coding\codex
 python -m http.server 4173
 ```
 
-然后打开：
+Then open:
 
 ```text
 http://localhost:4173
 ```
 
-## Android 打包
+## Android Packaging
 
-直接用 Android Studio 打开：
+Open this folder directly in Android Studio:
 
 `D:\coding\codex\android-app`
-
-更详细说明见：
-
-`D:\coding\codex\android-app\README.md`
